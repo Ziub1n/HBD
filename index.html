@@ -67,7 +67,7 @@
             max-width: 100%;
             max-height: 100%;
         }
-        #start-button {
+        #start-button, #browse-button {
             position: fixed;
             top: 50%;
             left: 50%;
@@ -78,6 +78,9 @@
             font-size: 1.5em;
             border: none;
             cursor: pointer;
+        }
+        #browse-button {
+            display: none;
         }
         audio {
             display: none;
@@ -117,6 +120,7 @@
 </audio>
 
 <button id="start-button">Start</button>
+<button id="browse-button">Przeglądaj pliki</button>
 
 <div id="wishes">
     <p>HBD! MOTHERFUCKER</p>
@@ -133,6 +137,7 @@
         const music = document.getElementById('background-music');
         const keySound = document.getElementById('key-sound');
         const startButton = document.getElementById('start-button');
+        const browseButton = document.getElementById('browse-button');
         const wishes = document.getElementById('wishes');
 
         const messages = [
@@ -239,10 +244,7 @@
                     clearInterval(loadingInterval);
                     keySound.pause();
                     loader.style.display = 'none';
-                    displayGallery();
-                    music.play().catch(error => {
-                        console.log("Playback failed:", error);
-                    });
+                    browseButton.style.display = 'block';
                 }
             }, 50);
         }
@@ -261,10 +263,10 @@
                     img.src = imagesArray[imageIndex];
                     img.alt = `Image ${imageIndex + 1}`;
                     img.classList.add('image-container');
-                    gallery.appendChild(img);
-                    setTimeout(() => {
+                    img.onload = () => {
                         img.style.opacity = 1;
-                    }, 100);
+                    };
+                    gallery.appendChild(img);
                     imageIndex++;
                 } else {
                     clearInterval(imageInterval);
@@ -284,6 +286,14 @@
             startButton.style.display = 'none';
             typingInterval = setInterval(typeNextChar, 50); // Skrócenie czasu do 50ms dla szybszego wypisywania
             playKeySound();
+        });
+
+        browseButton.addEventListener('click', () => {
+            browseButton.style.display = 'none';
+            music.play().catch(error => {
+                console.log("Playback failed:", error);
+            });
+            displayGallery();
         });
 
         setInterval(() => {
