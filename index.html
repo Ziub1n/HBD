@@ -46,7 +46,7 @@
             color: lime;
             text-align: left;
             width: 100%;
-            margin-top: -230px; /* Przesunięcie napisów wyżej */
+            margin-top: -350px; /* Przesunięcie napisów wyżej */
             position: absolute;
             top: 10%;
             left: 50%;
@@ -143,18 +143,23 @@
         const messages = [
             "Szukanie połączenia...\n",
             "Łączenie z serwerem DNS...\n",
-            "IP : 142.221.1.0.2...\n",
-            "Imie: Tolek...\n",
-            "Nazwisko: Grewiński...\n",
-            "Data urodzin: 01.07.2024...\n",
+            "---Znaleziono---\n",
+            "IP : 142.221.1.0.2\n",
+            "Imie: Tolek\n",
+            "Nazwisko: Grewiński\n",
+            "Data urodzin: 01.07.2024\n",
+            "---------------------------\n",
             "Usuwanie plików: \n",
             "-BEERBALLERS\n",
             "-Sąsiadka\n",
-            "-Nudesy\n",
-            "-Weed\n",
             "-Stopy\n",
-            "Pobieranie pozostałych\n",
-            "INICIALIZATION Wait ..."
+            "-Nudesy\n",
+            "-Rozin\n",
+            "Pobieranie pozostałych:\n",
+            "Rzucanie Frisbee...  [*****]\n",
+            "Zbieranie Grzybów... [*****]\n",
+            "\n",
+            "INICJALIZACJA CZEKAJ!!! ..."
         ];
 
         const hackerMessages = [
@@ -175,21 +180,11 @@
             "Planting trojan horse...\n"
         ];
 
-        const imageCount = 19; // Liczba zdjęć w folderze 'zdj'
+        const imageCount = 17; // Liczba zdjęć w folderze 'zdj'
         let imagesArray = [];
         for (let i = 1; i <= imageCount; i++) {
             imagesArray.push(`zdj/img${i}.png`);
         }
-
-        function shuffle(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-            return array;
-        }
-
-        imagesArray = shuffle(imagesArray);
 
         let currentMessageIndex = 0;
         let currentCharIndex = 0;
@@ -204,7 +199,7 @@
                 if (currentCharIndex < messages[currentMessageIndex].length) {
                     hackerText.textContent += messages[currentMessageIndex].charAt(currentCharIndex);
                     currentCharIndex++;
-                    updateCursor();
+
                 } else {
                     currentMessageIndex++;
                     currentCharIndex = 0;
@@ -218,10 +213,6 @@
             }
         }
 
-        function updateCursor() {
-            const textWidth = hackerText.offsetWidth;
-            cursor.style.left = `${textWidth}px`;
-        }
 
         function showHackerMessage() {
             const randomMessageIndex = Math.floor(Math.random() * hackerMessages.length);
